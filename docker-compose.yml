@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  researchfund-postgres:
+    container_name: "researchfund-postgres"
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: researchfund
+      POSTGRES_USER: researchfund
+      POSTGRES_DB: researchfund
