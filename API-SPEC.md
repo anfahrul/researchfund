@@ -1,9 +1,9 @@
-# API Spec Researchfund
+# Researchfund API 
 
 ## Register
 Request:
 - Method: POST
-- Endpoint: `/register`
+- Endpoint: `/api/register`
 - Header
     - Content-Type: application/json
     - Accept: application/json
@@ -35,7 +35,7 @@ Response:
 ## Login
 Request:
 - Method: POST
-- Endpoint: `/login`
+- Endpoint: `/api/login`
 - Header
     - Content-Type: application/json
     - Accept: application/json

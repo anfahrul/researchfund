@@ -9,4 +9,4 @@ services:
     environment:
       POSTGRES_PASSWORD: researchfund
       POSTGRES_USER: researchfund
-      POSTGRES_DB: researchfund
+      POSTGRES_DB: db_researchfund
