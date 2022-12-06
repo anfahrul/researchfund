@@ -50,13 +50,13 @@ Request:
 Response:
 ```json
 {
-    "code": 202,
+    "code": 200,
     "status": "success",
     "data": {
         "username": "funder01",
         "email": "funder01@mail.com",
-        "password": "pass7890",
-        "role": 1
+        "role": "FUNDER",
+        "token": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJmdW5kZXIwMSIsImV4cCI6MTY3MDM3MTM0OX0.ca_mOsC2LQHiGYN-N59tKXjEpCQ4d5a2d2lkWtMye5KvczJKf8sF2xOoU0T_sznuLdgbbz2ACYrU8ZvLHP9S8w"
     }
 } 
 ```
