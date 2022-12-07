@@ -11,22 +11,22 @@ data class FunderProfile(
     val funderId: Int = 0,
 
     @Column(name = "organitation_name")
-    val organitationName: String = "",
+    var organitationName: String = "",
 
     @Column(name = "address")
-    val address: String = "",
+    var address: String = "",
 
     @Column(name = "organitation_description")
-    val organitation_description: String = "",
+    var organitation_description: String = "",
 
     @Column(name = "phone")
-    val phone: String = "",
+    var phone: String = "",
 
     @Column(name = "email")
-    val email: String = "",
+    var email: String = "",
 
     @Column(name = "logo")
-    val logo: String = "",
+    var logo: String = "",
 
     @Column(name = "username")
     val username: String
