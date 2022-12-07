@@ -25,6 +25,8 @@ interface UserAccountService {
 
     fun jwtConfiguration(userAccount: UserAccount?, response: HttpServletResponse): String
 
+    fun cookieCheck(jwt: String?): Int
+
     fun deleteCookie(jwt: String?, response: HttpServletResponse)
 
 }

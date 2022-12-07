@@ -6,10 +6,7 @@ import com.anfahrul.researchfund.entity.Role
 import com.anfahrul.researchfund.entity.UserAccount
 import com.anfahrul.researchfund.exception.BadRequestException
 import com.anfahrul.researchfund.exception.UnauthorizedException
-import com.anfahrul.researchfund.model.CreateUserAccountRequest
-import com.anfahrul.researchfund.model.CreateUserAccountResponse
-import com.anfahrul.researchfund.model.LoginRequest
-import com.anfahrul.researchfund.model.LoginResponse
+import com.anfahrul.researchfund.model.*
 import com.anfahrul.researchfund.repository.FunderProfileRepository
 import com.anfahrul.researchfund.repository.ResearcherProfileRepository
 import com.anfahrul.researchfund.repository.UserAccountRepository
@@ -19,6 +16,7 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.*
@@ -126,6 +124,31 @@ class UserAccountServiceImpl(
         response.addCookie(cookie)
 
         return jwt
+    }
+
+    override fun cookieCheck(jwt: String?): Int {
+        try {
+            if (jwt == null) {
+                throw BadRequestException("Akses tidak diizinkan")
+            }
+
+            val body = Jwts.parser().setSigningKey("secret-key").parseClaimsJws(jwt).body
+
+            val userAccount = userAccountRepository.findByIdOrNull(body.issuer)
+            if (userAccount == null) {
+                throw UnauthorizedException("Akses tidak diizinkan")
+            }
+
+            var researcherProfile: ResearcherProfile? = null
+            if (userAccount?.role == Role.RESEARCHER) {
+                researcherProfile = researcherProfileRepository.findByUsername(userAccount.username)
+                return researcherProfile!!.researcherId
+            }
+
+            return 0
+        } catch (e: Exception) {
+            throw BadRequestException("Akses tidak diizinkan")
+        }
     }
 
     override fun deleteCookie(jwt: String?, response: HttpServletResponse) {
