@@ -139,13 +139,13 @@ class UserAccountServiceImpl(
                 throw UnauthorizedException("Akses tidak diizinkan")
             }
 
-            var researcherProfile: ResearcherProfile? = null
             if (userAccount?.role == Role.RESEARCHER) {
-                researcherProfile = researcherProfileRepository.findByUsername(userAccount.username)
+                val researcherProfile = researcherProfileRepository.findByUsername(userAccount.username)
                 return researcherProfile!!.researcherId
+            } else {
+                val funderProfile = funderProfileRepository.findByUsername(userAccount.username)
+                return funderProfile!!.funderId
             }
-
-            return 0
         } catch (e: Exception) {
             throw BadRequestException("Akses tidak diizinkan")
         }
