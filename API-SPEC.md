@@ -60,3 +60,21 @@ Response:
     }
 } 
 ```
+
+
+## Logout
+Request:
+- Method: POST
+- Endpoint: `/api/logout`
+- Header
+  - Content-Type: application/json
+  - Accept: application/json
+
+Response:
+```json
+{
+  "code": 200,
+  "status": "Logout success",
+  "data": null
+}
+```
