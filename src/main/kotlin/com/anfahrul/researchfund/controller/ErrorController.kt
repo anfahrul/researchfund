@@ -1,6 +1,7 @@
 package com.anfahrul.researchfund.controller
 
 import com.anfahrul.researchfund.exception.BadRequestException
+import com.anfahrul.researchfund.exception.NotFoundException
 import com.anfahrul.researchfund.exception.UnauthorizedException
 import com.anfahrul.researchfund.model.WebResponseFail
 import com.anfahrul.researchfund.model.WebResponse
@@ -34,6 +35,15 @@ class ErrorController {
         return WebResponseFail(
             code = 400,
             status = "Bad Request",
+            message = e.message!!
+        )
+    }
+
+    @ExceptionHandler(value = [NotFoundException::class])
+    fun badRequestHandler(e: NotFoundException): WebResponseFail {
+        return WebResponseFail(
+            code = 404,
+            status = "Not Found",
             message = e.message!!
         )
     }

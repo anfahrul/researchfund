@@ -11,22 +11,22 @@ data class ResearcherProfile(
     val researcherId: Int = 0,
 
     @Column(name = "name")
-    val name: String = "",
+    var name: String = "",
 
     @Column(name = "front_title")
-    val frontTitle: String = "",
+    var frontTitle: String = "",
 
     @Column(name = "back_degree")
-    val backDegree: String = "",
+    var backDegree: String = "",
 
     @Column(name = "photo")
-    val photo: String = "",
+    var photo: String = "",
 
     @Column(name = "ktp_no")
-    val ktpNo: String = "",
+    var ktpNo: String = "",
 
     @Column(name = "areas_of_experience")
-    val areasOfExperience: String = "",
+    var areasOfExperience: String = "",
 
     @Column(name = "username")
     val username: String
