@@ -83,9 +83,9 @@ class ResearcherController(
     @GetMapping("research_experience/{researcher_id}")
     fun getResearchExperience(
         @PathVariable("researcher_id") researcherId: Int,
-        @CookieValue("jwt") jwt: String?
+        @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        userAccountService.cookieCheck(jwt)
+        userAccountService.cookieCheck(authorization)
 
         val getResearchExperienceResponse = researchExperienceService.getResearchExperienceByResearcherId(researcherId)
 
