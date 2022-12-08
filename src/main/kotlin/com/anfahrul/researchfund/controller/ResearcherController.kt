@@ -36,8 +36,11 @@ class ResearcherController(
     }
 
     @PostMapping("research_experience/add")
-    fun addResearchExperience(@RequestBody researchExperienceRequest: ResearchExperienceRequest, @CookieValue("jwt") jwt: String?): WebResponse<Any> {
-        val researcherId = userAccountService.cookieCheck(jwt)
+    fun addResearchExperience(
+        @RequestBody researchExperienceRequest: ResearchExperienceRequest,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<Any> {
+        val researcherId = userAccountService.cookieCheck(authorization)
 
         val researchExperienceResponse = researchExperienceService.add(researcherId, researchExperienceRequest)
 
