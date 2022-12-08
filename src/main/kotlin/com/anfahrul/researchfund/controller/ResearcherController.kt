@@ -60,4 +60,20 @@ class ResearcherController(
             data = updateProfileResponse
         )
     }
+
+    @GetMapping("education/{researcher_id}")
+    fun getEducations(
+        @PathVariable("researcher_id") researcherId: Int,
+        @CookieValue("jwt") jwt: String?
+    ): WebResponse<Any> {
+        userAccountService.cookieCheck(jwt)
+
+        val getEducationResponse = educationService.getEducationByResearcherId(researcherId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = getEducationResponse
+        )
+    }
 }
