@@ -9,7 +9,7 @@ data class ResearchOffer(
     @Id
     @Column(name = "research_offer")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val researchOffer: Int = 0,
+    val researchOfferId: Int = 0,
 
     @Column(name = "research_offer_name")
     var researchOfferName: String = "",

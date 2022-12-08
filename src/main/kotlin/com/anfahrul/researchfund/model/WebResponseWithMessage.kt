@@ -1,6 +1,6 @@
 package com.anfahrul.researchfund.model
 
-data class WebResponseFail (
+data class WebResponseWithMessage (
     val code: Int,
 
     val status: String,

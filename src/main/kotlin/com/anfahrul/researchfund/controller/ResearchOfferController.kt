@@ -26,4 +26,80 @@ class ResearchOfferController(
             data = createOfferResponse
         )
     }
+
+    @GetMapping("research_offer/{research_offer_id}")
+    fun get(
+        @PathVariable("research_offer_id") researchOfferId: Int,
+        @RequestBody researchOfferRequest: ResearchOfferRequest,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<ResearchOffer> {
+        userAccountService.authorizationCheck(authorization)
+        val getOfferResponse = researchOfferService.get(researchOfferId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = getOfferResponse
+        )
+    }
+
+    @GetMapping("research_offer/find_by_funder")
+    fun getAllByFunderId(
+        @RequestBody researchOfferRequest: ResearchOfferRequest,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<List<ResearchOffer>> {
+        val funderId = userAccountService.authorizationCheck(authorization)
+        val getOfferResponseByFunder = researchOfferService.getAllByFunderId(funderId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = getOfferResponseByFunder
+        )
+    }
+
+    @GetMapping("research_offers")
+    fun getAll(
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<List<ResearchOffer>> {
+        userAccountService.authorizationCheck(authorization)
+        val getOfferResponseByFunder = researchOfferService.getAll()
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = getOfferResponseByFunder
+        )
+    }
+
+    @PutMapping("research_offer/{research_offer_id}/update")
+    fun update(
+        @PathVariable("research_offer_id") researchOfferId: Int,
+        @RequestBody researchOfferRequest: ResearchOfferRequest,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<ResearchOffer> {
+        userAccountService.authorizationCheck(authorization)
+        val updateOfferResponse = researchOfferService.update(researchOfferId, researchOfferRequest)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = updateOfferResponse
+        )
+    }
+
+    @DeleteMapping("research_offer/{research_offer_id}/delete")
+    fun delete(
+        @PathVariable("research_offer_id") researchOfferId: Int,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponseWithMessage {
+        userAccountService.authorizationCheck(authorization)
+        researchOfferService.delete(researchOfferId)
+
+        return WebResponseWithMessage(
+            code = 200,
+            status = "Ok",
+            message = "Research offer berhasil dihapus"
+        )
+    }
 }
