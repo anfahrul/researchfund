@@ -1,7 +1,6 @@
 package com.anfahrul.researchfund.controller
 
 import com.anfahrul.researchfund.entity.FunderProfile
-import com.anfahrul.researchfund.entity.ResearcherProfile
 import com.anfahrul.researchfund.model.*
 import com.anfahrul.researchfund.service.*
 import org.springframework.web.bind.annotation.*
@@ -18,7 +17,7 @@ class FunderController(
         @RequestBody updateFunderProfile: UpdateFunderProfile,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<FunderProfile> {
-        userAccountService.cookieCheck(authorization)
+        userAccountService.authorizationCheck(authorization)
         val updateProfileResponse = funderProfileService.update(funderId, updateFunderProfile)
 
         return WebResponse(

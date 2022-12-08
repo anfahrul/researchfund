@@ -123,7 +123,7 @@ class UserAccountServiceImpl(
         return jwtToken
     }
 
-    override fun cookieCheck(jwt: String?): Int {
+    override fun authorizationCheck(jwt: String?): Int {
         try {
             if (jwt == null) {
                 throw BadRequestException("Akses tidak diizinkan")

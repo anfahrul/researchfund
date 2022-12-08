@@ -24,7 +24,7 @@ class ResearcherController(
         @RequestBody educationRequest: EducationRequest,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        val researcherId = userAccountService.cookieCheck(authorization)
+        val researcherId = userAccountService.authorizationCheck(authorization)
 
         val educationsResponse = educationService.add(researcherId, educationRequest)
 
@@ -40,7 +40,7 @@ class ResearcherController(
         @RequestBody researchExperienceRequest: ResearchExperienceRequest,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        val researcherId = userAccountService.cookieCheck(authorization)
+        val researcherId = userAccountService.authorizationCheck(authorization)
 
         val researchExperienceResponse = researchExperienceService.add(researcherId, researchExperienceRequest)
 
@@ -57,7 +57,7 @@ class ResearcherController(
         @RequestBody updateResearcherProfile: UpdateResearcherProfile,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<ResearcherProfile> {
-        userAccountService.cookieCheck(authorization)
+        userAccountService.authorizationCheck(authorization)
         val updateProfileResponse = researcherProfileService.update(researcherId, updateResearcherProfile)
 
         return WebResponse(
@@ -72,7 +72,7 @@ class ResearcherController(
         @PathVariable("researcher_id") researcherId: Int,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        userAccountService.cookieCheck(authorization)
+        userAccountService.authorizationCheck(authorization)
 
         val getEducationResponse = educationService.getEducationByResearcherId(researcherId)
 
@@ -88,7 +88,7 @@ class ResearcherController(
         @PathVariable("researcher_id") researcherId: Int,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        userAccountService.cookieCheck(authorization)
+        userAccountService.authorizationCheck(authorization)
 
         val getResearchExperienceResponse = researchExperienceService.getResearchExperienceByResearcherId(researcherId)
 

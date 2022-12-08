@@ -5,7 +5,6 @@ import com.anfahrul.researchfund.model.CreateUserAccountRequest
 import com.anfahrul.researchfund.model.CreateUserAccountResponse
 import com.anfahrul.researchfund.model.LoginRequest
 import com.anfahrul.researchfund.model.LoginResponse
-import jakarta.servlet.http.HttpServletResponse
 
 interface UserAccountService {
 
@@ -25,5 +24,5 @@ interface UserAccountService {
 
     fun jwtConfiguration(userAccount: UserAccount?): String
 
-    fun cookieCheck(jwt: String?): Int
+    fun authorizationCheck(jwt: String?): Int
 }

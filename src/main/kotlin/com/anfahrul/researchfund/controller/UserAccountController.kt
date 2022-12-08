@@ -4,7 +4,6 @@ import com.anfahrul.researchfund.model.*
 import com.anfahrul.researchfund.service.FunderProfileService
 import com.anfahrul.researchfund.service.ResearcherProfileService
 import com.anfahrul.researchfund.service.UserAccountService
-import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -42,7 +41,7 @@ class UserAccountController(
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any?> {
 
-        userAccountService.cookieCheck(authorization)
+        userAccountService.authorizationCheck(authorization)
 
         return WebResponse(
             code = 200,
