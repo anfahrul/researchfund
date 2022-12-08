@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface ResearchExperienceRepository: JpaRepository<ResearchExperience, Int> {
 
-    fun findByResearcherId(researcherId: Int): List<ResearchExperience>
+    fun findByResearcherId(researcherId: String): List<ResearchExperience>
 }

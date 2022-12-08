@@ -27,5 +27,5 @@ data class ResearchOffer(
     var fund: Int = 0,
 
     @Column(name = "funder_id")
-    val funderId: Int = 0
+    val funderId: String = ""
 )

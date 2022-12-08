@@ -7,6 +7,6 @@ interface ResearcherProfileService {
 
     fun create(username: String)
 
-    fun update(researcherId: Int, updateResearcherProfile: UpdateResearcherProfile): ResearcherProfile
+    fun update(researcherId: String, updateResearcherProfile: UpdateResearcherProfile): ResearcherProfile
 
 }

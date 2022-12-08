@@ -17,7 +17,7 @@ class EducationServiceImpl(
     val researcherProfileRepository: ResearcherProfileRepository,
     val validationUtil: ValidationUtil
 ): EducationService {
-    override fun add(researcherId: Int, educationRequest: EducationRequest): GetEducationResponse<Any> {
+    override fun add(researcherId: String, educationRequest: EducationRequest): GetEducationResponse<Any> {
         validationUtil.validate(researcherId)
         validationUtil.validate(educationRequest)
 
@@ -34,7 +34,7 @@ class EducationServiceImpl(
         return educations
     }
 
-    override fun getEducationByResearcherId(researcherId: Int): GetEducationResponse<Any> {
+    override fun getEducationByResearcherId(researcherId: String): GetEducationResponse<Any> {
         validationUtil.validate(researcherId)
 
         val researcherProfile = researcherProfileRepository.findByIdOrNull(researcherId)

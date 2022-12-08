@@ -6,11 +6,11 @@ import com.anfahrul.researchfund.model.ResearchOfferResponse
 
 interface ResearchOfferService {
 
-    fun create(funderId: Int, researchOfferRequest: ResearchOfferRequest): ResearchOfferResponse
+    fun create(funderId: String, researchOfferRequest: ResearchOfferRequest): ResearchOfferResponse
 
     fun get(researchOfferId: Int): ResearchOffer
 
-    fun getAllByFunderId(funderId: Int): List<ResearchOffer>
+    fun getAllByFunderId(funderId: String): List<ResearchOffer>
 
     fun getAll(): List<ResearchOffer>
 

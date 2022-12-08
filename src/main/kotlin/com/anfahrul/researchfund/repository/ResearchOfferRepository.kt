@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface ResearchOfferRepository: JpaRepository<ResearchOffer, Int> {
 
-    fun findByFunderId(funderId: Int): List<ResearchOffer>
+    fun findByFunderId(funderId: String): List<ResearchOffer>
 }

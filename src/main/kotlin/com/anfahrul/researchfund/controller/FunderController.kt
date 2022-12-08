@@ -14,7 +14,7 @@ class FunderController(
 ) {
     @PutMapping("funder_profile/{funder_id}/update")
     fun updateProfile(
-        @PathVariable("funder_id") funderId: Int,
+        @PathVariable("funder_id") funderId: String,
         @RequestBody updateFunderProfile: UpdateFunderProfile,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<FunderProfile> {

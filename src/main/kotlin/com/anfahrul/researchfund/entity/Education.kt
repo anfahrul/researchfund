@@ -20,5 +20,5 @@ data class Education(
     val graduationYear: Int = 0,
 
     @Column(name = "researcher_id")
-    val researcherId: Int = 0
+    val researcherId: String = ""
 )

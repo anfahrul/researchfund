@@ -24,5 +24,5 @@ data class ResearchExperience(
     val roleName: String = "",
 
     @Column(name = "researcher_id")
-    val researcherId: Int = 0
+    val researcherId: String = ""
 )

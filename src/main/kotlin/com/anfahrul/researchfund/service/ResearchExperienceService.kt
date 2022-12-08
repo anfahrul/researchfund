@@ -5,7 +5,7 @@ import com.anfahrul.researchfund.model.GetResearchExperienceResponse
 import com.anfahrul.researchfund.model.ResearchExperienceRequest
 
 interface ResearchExperienceService {
-    fun add(researcherId: Int, researchExperienceRequest: ResearchExperienceRequest): GetResearchExperienceResponse<Any>
+    fun add(researcherId: String, researchExperienceRequest: ResearchExperienceRequest): GetResearchExperienceResponse<Any>
 
-    fun getResearchExperienceByResearcherId(researcherId: Int): GetResearchExperienceResponse<Any>
+    fun getResearchExperienceByResearcherId(researcherId: String): GetResearchExperienceResponse<Any>
 }

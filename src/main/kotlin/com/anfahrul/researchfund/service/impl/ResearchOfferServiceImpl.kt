@@ -17,7 +17,7 @@ class ResearchOfferServiceImpl(
     val funderProfileRepository: FunderProfileRepository,
     val validationUtil: ValidationUtil
 ): ResearchOfferService {
-    override fun create(funderId: Int, researchOfferRequest: ResearchOfferRequest): ResearchOfferResponse {
+    override fun create(funderId: String, researchOfferRequest: ResearchOfferRequest): ResearchOfferResponse {
         validationUtil.validate(researchOfferRequest)
 
         val researchOffer = ResearchOffer(
@@ -47,7 +47,7 @@ class ResearchOfferServiceImpl(
         return researchOffer
     }
 
-    override fun getAllByFunderId(funderId: Int): List<ResearchOffer> {
+    override fun getAllByFunderId(funderId: String): List<ResearchOffer> {
         val researchOffer = funderProfileRepository.findByIdOrNull(funderId)
             ?: throw NotFoundException("Profile organisasi tidak ditemukan")
 

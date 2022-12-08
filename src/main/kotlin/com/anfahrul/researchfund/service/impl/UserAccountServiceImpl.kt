@@ -123,7 +123,7 @@ class UserAccountServiceImpl(
         return jwtToken
     }
 
-    override fun authorizationCheck(jwt: String?): Int {
+    override fun authorizationCheck(jwt: String?): String {
         try {
             if (jwt == null) {
                 throw BadRequestException("Akses tidak diizinkan")

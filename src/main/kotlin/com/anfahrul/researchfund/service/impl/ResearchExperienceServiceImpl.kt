@@ -18,7 +18,7 @@ class ResearchExperienceServiceImpl(
     val validationUtil: ValidationUtil
 ): ResearchExperienceService {
     override fun add(
-        researcherId: Int,
+        researcherId: String,
         researchExperienceRequest: ResearchExperienceRequest
     ): GetResearchExperienceResponse<Any> {
         validationUtil.validate(researcherId)
@@ -38,7 +38,7 @@ class ResearchExperienceServiceImpl(
         return researchExperiences
     }
 
-    override fun getResearchExperienceByResearcherId(researcherId: Int): GetResearchExperienceResponse<Any> {
+    override fun getResearchExperienceByResearcherId(researcherId: String): GetResearchExperienceResponse<Any> {
         validationUtil.validate(researcherId)
 
         val researcherProfile = researcherProfileRepository.findByIdOrNull(researcherId)

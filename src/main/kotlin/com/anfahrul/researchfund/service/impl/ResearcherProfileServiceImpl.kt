@@ -24,7 +24,7 @@ class ResearcherProfileServiceImpl(
         researcherProfileRepository.save(researcherProfile)
     }
 
-    override fun update(researcherId: Int, updateResearcherProfile: UpdateResearcherProfile): ResearcherProfile {
+    override fun update(researcherId: String, updateResearcherProfile: UpdateResearcherProfile): ResearcherProfile {
         validationUtil.validate(updateResearcherProfile)
 
         val researcherProfile = researcherProfileRepository.findByIdOrNull(researcherId)

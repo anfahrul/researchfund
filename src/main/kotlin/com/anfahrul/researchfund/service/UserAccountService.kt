@@ -24,5 +24,5 @@ interface UserAccountService {
 
     fun jwtConfiguration(userAccount: UserAccount?): String
 
-    fun authorizationCheck(jwt: String?): Int
+    fun authorizationCheck(jwt: String?): String
 }

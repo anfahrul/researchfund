@@ -7,8 +7,8 @@ import jakarta.persistence.*
 data class FunderProfile(
     @Id
     @Column(name = "funder_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    val funderId: Int = 0,
+    @GeneratedValue(strategy = GenerationType.UUID)
+    val funderId: String = "",
 
     @Column(name = "organitation_name")
     var organitationName: String = "",

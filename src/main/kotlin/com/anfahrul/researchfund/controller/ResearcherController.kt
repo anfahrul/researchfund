@@ -53,7 +53,7 @@ class ResearcherController(
 
     @PutMapping("researcher_profile/{researcher_id}/update")
     fun updateProfile(
-        @PathVariable("researcher_id") researcherId: Int,
+        @PathVariable("researcher_id") researcherId: String,
         @RequestBody updateResearcherProfile: UpdateResearcherProfile,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<ResearcherProfile> {
@@ -70,7 +70,7 @@ class ResearcherController(
 
     @GetMapping("education/{researcher_id}")
     fun getEducations(
-        @PathVariable("researcher_id") researcherId: Int,
+        @PathVariable("researcher_id") researcherId: String,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
         userAccountService.authorizationCheck(authorization)
@@ -86,7 +86,7 @@ class ResearcherController(
 
     @GetMapping("research_experience/{researcher_id}")
     fun getResearchExperience(
-        @PathVariable("researcher_id") researcherId: Int,
+        @PathVariable("researcher_id") researcherId: String,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
         userAccountService.authorizationCheck(authorization)
