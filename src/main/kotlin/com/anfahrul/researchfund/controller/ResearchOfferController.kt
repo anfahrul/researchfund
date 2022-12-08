@@ -46,12 +46,12 @@ class ResearchOfferController(
         )
     }
 
-    @GetMapping("research_offer/find_by_funder")
+    @GetMapping("funder_profile/{funder_id}/research_offer")
     fun getAllByFunderId(
-        @RequestBody researchOfferRequest: ResearchOfferRequest,
+        @PathVariable("funder_id") funderId: String,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<List<ResearchOffer>> {
-        val funderId = userAccountService.authorizationCheck(authorization)
+        userAccountService.authorizationCheck(authorization)
         val getOfferResponseByFunder = researchOfferService.getAllByFunderId(funderId)
 
         return WebResponse(
