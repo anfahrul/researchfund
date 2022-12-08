@@ -20,8 +20,11 @@ class ResearcherController(
     val userAccountService: UserAccountService
 ) {
     @PostMapping("education/add")
-    fun addEducation(@RequestBody educationRequest: EducationRequest, @CookieValue("jwt") jwt: String?): WebResponse<Any> {
-        val researcherId = userAccountService.cookieCheck(jwt)
+    fun addEducation(
+        @RequestBody educationRequest: EducationRequest,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<Any> {
+        val researcherId = userAccountService.cookieCheck(authorization)
 
         val educationsResponse = educationService.add(researcherId, educationRequest)
 
@@ -64,9 +67,9 @@ class ResearcherController(
     @GetMapping("education/{researcher_id}")
     fun getEducations(
         @PathVariable("researcher_id") researcherId: Int,
-        @CookieValue("jwt") jwt: String?
+        @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        userAccountService.cookieCheck(jwt)
+        userAccountService.cookieCheck(authorization)
 
         val getEducationResponse = educationService.getEducationByResearcherId(researcherId)
 

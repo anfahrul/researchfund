@@ -111,10 +111,9 @@ class UserAccountServiceImpl(
     }
 
     override fun jwtConfiguration(userAccount: UserAccount?): String {
-        val issuer = userAccount?.username.toString()
         val key = "secret-key"
         val jwtToken = Jwts.builder()
-            .setIssuer(issuer)
+            .setIssuer("Researchfund")
             .claim("username", userAccount?.username)
             .claim("email", userAccount?.email)
             .claim("role", userAccount?.role)
@@ -131,18 +130,18 @@ class UserAccountServiceImpl(
                 throw BadRequestException("Akses tidak diizinkan")
             }
 
-            val body = Jwts.parser().setSigningKey("secret-key").parseClaimsJws(jwt).body
-
-            val userAccount = userAccountRepository.findByIdOrNull(body.issuer)
-            if (userAccount == null) {
-                throw UnauthorizedException("Akses tidak diizinkan")
+            if (!jwt.contains("Bearer")) {
+                throw BadRequestException("Authorization token is invalid")
             }
 
-            if (userAccount?.role == Role.RESEARCHER) {
-                val researcherProfile = researcherProfileRepository.findByUsername(userAccount.username)
+            val token = jwt.substring(7, jwt.length)
+            val body = Jwts.parser().setSigningKey("secret-key").parseClaimsJws(token).body
+
+            if (body["role"].toString() == Role.RESEARCHER.toString()) {
+                val researcherProfile = researcherProfileRepository.findByUsername(body["username"].toString())
                 return researcherProfile!!.researcherId
             } else {
-                val funderProfile = funderProfileRepository.findByUsername(userAccount.username)
+                val funderProfile = funderProfileRepository.findByUsername(body["username"].toString())
                 return funderProfile!!.funderId
             }
         } catch (e: Exception) {
