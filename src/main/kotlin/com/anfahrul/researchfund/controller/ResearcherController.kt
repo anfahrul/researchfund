@@ -82,12 +82,11 @@ class ResearcherController(
         )
     }
 
-    @GetMapping("education/{researcher_id}")
+    @GetMapping("education")
     fun getEducations(
-        @PathVariable("researcher_id") researcherId: String,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        userAccountService.authorizationCheck(authorization)
+        val researcherId = userAccountService.authorizationCheck(authorization)
 
         val getEducationResponse = educationService.getEducationByResearcherId(researcherId)
 
