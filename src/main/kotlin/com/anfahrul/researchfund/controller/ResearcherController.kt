@@ -17,6 +17,21 @@ class ResearcherController(
     val userAccountService: UserAccountService,
     val middleware: Middleware
 ) {
+    @GetMapping("researcher_profile")
+    fun getProfile(
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<Any> {
+        val researcherId = userAccountService.authorizationCheck(authorization)
+
+        val getResearcherProfileResponse = researcherProfileService.get(researcherId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = getResearcherProfileResponse
+        )
+    }
+
     @PostMapping("education/add")
     fun addEducation(
         @RequestBody educationRequest: EducationRequest,
@@ -51,13 +66,12 @@ class ResearcherController(
         )
     }
 
-    @PutMapping("researcher_profile/{researcher_id}/update")
+    @PutMapping("researcher_profile/update")
     fun updateProfile(
-        @PathVariable("researcher_id") researcherId: String,
         @RequestBody updateResearcherProfile: UpdateResearcherProfile,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<ResearcherProfile> {
-        userAccountService.authorizationCheck(authorization)
+        val researcherId = userAccountService.authorizationCheck(authorization)
         val updateProfileResponse = researcherProfileService.update(researcherId, updateResearcherProfile)
         middleware.researcherMiddleware(authorization)
 

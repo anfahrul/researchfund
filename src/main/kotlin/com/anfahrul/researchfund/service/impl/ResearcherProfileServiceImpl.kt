@@ -24,6 +24,13 @@ class ResearcherProfileServiceImpl(
         researcherProfileRepository.save(researcherProfile)
     }
 
+    override fun get(researcherId: String): ResearcherProfile {
+        val researcherProfile = researcherProfileRepository.findByIdOrNull(researcherId)
+            ?: throw NotFoundException("Profil peneliti tidak ditemukan")
+
+        return researcherProfile
+    }
+
     override fun update(researcherId: String, updateResearcherProfile: UpdateResearcherProfile): ResearcherProfile {
         validationUtil.validate(updateResearcherProfile)
 
