@@ -76,4 +76,20 @@ class ResearcherController(
             data = getEducationResponse
         )
     }
+
+    @GetMapping("research_experience/{researcher_id}")
+    fun getResearchExperience(
+        @PathVariable("researcher_id") researcherId: Int,
+        @CookieValue("jwt") jwt: String?
+    ): WebResponse<Any> {
+        userAccountService.cookieCheck(jwt)
+
+        val getResearchExperienceResponse = researchExperienceService.getResearchExperienceByResearcherId(researcherId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = getResearchExperienceResponse
+        )
+    }
 }
