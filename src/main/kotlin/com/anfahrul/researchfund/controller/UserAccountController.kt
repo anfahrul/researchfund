@@ -34,9 +34,9 @@ class UserAccountController(
     }
 
     @PostMapping("login")
-    fun login(@RequestBody body: LoginRequest, response: HttpServletResponse): WebResponse<Any?> {
+    fun login(@RequestBody body: LoginRequest): WebResponse<Any?> {
 
-        val loginResponse = userAccountService.login(body, response)
+        val loginResponse = userAccountService.login(body)
 
         return WebResponse(
             code = 200,

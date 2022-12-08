@@ -67,7 +67,7 @@ class UserAccountServiceImpl(
         researcherProfileRepository.save(researcherProfile)
     }
 
-    override fun login(loginRequest: LoginRequest, response: HttpServletResponse): LoginResponse? {
+    override fun login(loginRequest: LoginRequest): LoginResponse? {
         val userIsExist = findByEmail(loginRequest.email)
         if (!userIsExist) {
             throw BadRequestException("user account not registered")
@@ -79,7 +79,7 @@ class UserAccountServiceImpl(
             throw BadRequestException("email and password combination is invalid")
         }
 
-        val jwtToken = jwtConfiguration(userAccount, response)
+        val jwtToken = jwtConfiguration(userAccount)
 
         return LoginResponse(
             userAccount?.username,
@@ -110,20 +110,19 @@ class UserAccountServiceImpl(
         return userAccount
     }
 
-    override fun jwtConfiguration(userAccount: UserAccount?, response: HttpServletResponse): String {
+    override fun jwtConfiguration(userAccount: UserAccount?): String {
         val issuer = userAccount?.username.toString()
         val key = "secret-key"
-        val jwt = Jwts.builder()
+        val jwtToken = Jwts.builder()
             .setIssuer(issuer)
+            .claim("username", userAccount?.username)
+            .claim("email", userAccount?.email)
+            .claim("role", userAccount?.role)
             .setExpiration(Date(System.currentTimeMillis() + 60 * 24 * 1000))
             .signWith(SignatureAlgorithm.HS512, key)
             .compact()
 
-        val cookie = Cookie("jwt", jwt)
-        cookie.isHttpOnly = true
-        response.addCookie(cookie)
-
-        return jwt
+        return jwtToken
     }
 
     override fun cookieCheck(jwt: String?): Int {

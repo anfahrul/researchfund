@@ -15,7 +15,7 @@ interface UserAccountService {
 
     fun createResearcherProfile(username: String)
 
-    fun login(loginRequest: LoginRequest, response: HttpServletResponse): LoginResponse?
+    fun login(loginRequest: LoginRequest): LoginResponse?
 
     fun findByEmail(email: String): Boolean
 
@@ -23,7 +23,7 @@ interface UserAccountService {
 
     fun getUserByEmail(email: String): UserAccount?
 
-    fun jwtConfiguration(userAccount: UserAccount?, response: HttpServletResponse): String
+    fun jwtConfiguration(userAccount: UserAccount?): String
 
     fun cookieCheck(jwt: String?): Int
 
