@@ -24,6 +24,13 @@ class FunderProfileServiceImpl(
         funderProfileRepository.save(funderProfile)
     }
 
+    override fun get(funderId: String): FunderProfile {
+        val funderProfile = funderProfileRepository.findByIdOrNull(funderId)
+            ?: throw NotFoundException("Profil peneliti tidak ditemukan")
+
+        return funderProfile
+    }
+
     override fun update(researcherId: String, updateFunderProfile: UpdateFunderProfile): FunderProfile {
         validationUtil.validate(updateFunderProfile)
 

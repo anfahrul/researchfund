@@ -12,13 +12,27 @@ class FunderController(
     val userAccountService: UserAccountService,
     val middleware: Middleware
 ) {
-    @PutMapping("funder_profile/{funder_id}/update")
+    @GetMapping("funder_profile")
+    fun getProfile(
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<Any> {
+        val funderId = userAccountService.authorizationCheck(authorization)
+
+        val getFunderProfileResponse = funderProfileService.get(funderId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = getFunderProfileResponse
+        )
+    }
+
+    @PutMapping("funder_profile/update")
     fun updateProfile(
-        @PathVariable("funder_id") funderId: String,
         @RequestBody updateFunderProfile: UpdateFunderProfile,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<FunderProfile> {
-        userAccountService.authorizationCheck(authorization)
+        val funderId = userAccountService.authorizationCheck(authorization)
         middleware.funderMiddleware(authorization)
 
         val updateProfileResponse = funderProfileService.update(funderId, updateFunderProfile)

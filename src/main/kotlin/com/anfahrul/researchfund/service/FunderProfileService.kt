@@ -7,6 +7,8 @@ interface FunderProfileService {
 
     fun create(username: String)
 
+    fun get(funderId: String): FunderProfile
+
     fun update(researcherId: String, updateFunderProfile: UpdateFunderProfile): FunderProfile
 
 }
