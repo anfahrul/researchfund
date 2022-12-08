@@ -6,6 +6,7 @@ import com.anfahrul.researchfund.model.ResearchExperienceRequest
 import com.anfahrul.researchfund.model.UpdateResearcherProfile
 import com.anfahrul.researchfund.model.WebResponse
 import com.anfahrul.researchfund.service.*
+import jakarta.websocket.server.PathParam
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -17,11 +18,12 @@ class ResearcherController(
     val userAccountService: UserAccountService,
     val middleware: Middleware
 ) {
-    @GetMapping("researcher_profile")
+    @GetMapping("researcher_profile/{researcher_id}")
     fun getProfile(
+        @PathVariable("researcher_id") researcherId: String,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        val researcherId = userAccountService.authorizationCheck(authorization)
+        userAccountService.authorizationCheck(authorization)
 
         val getResearcherProfileResponse = researcherProfileService.get(researcherId)
 
@@ -97,12 +99,11 @@ class ResearcherController(
         )
     }
 
-    @GetMapping("research_experience/{researcher_id}")
+    @GetMapping("research_experience")
     fun getResearchExperience(
-        @PathVariable("researcher_id") researcherId: String,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        userAccountService.authorizationCheck(authorization)
+        val researcherId = userAccountService.authorizationCheck(authorization)
 
         val getResearchExperienceResponse = researchExperienceService.getResearchExperienceByResearcherId(researcherId)
 
