@@ -16,9 +16,9 @@ class FunderController(
     fun updateProfile(
         @PathVariable("funder_id") funderId: Int,
         @RequestBody updateFunderProfile: UpdateFunderProfile,
-        @CookieValue("jwt") jwt: String?
+        @RequestHeader("Authorization") authorization: String?
     ): WebResponse<FunderProfile> {
-        userAccountService.cookieCheck(jwt)
+        userAccountService.cookieCheck(authorization)
         val updateProfileResponse = funderProfileService.update(funderId, updateFunderProfile)
 
         return WebResponse(
