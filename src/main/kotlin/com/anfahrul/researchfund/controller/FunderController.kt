@@ -12,11 +12,12 @@ class FunderController(
     val userAccountService: UserAccountService,
     val middleware: Middleware
 ) {
-    @GetMapping("funder_profile")
+    @GetMapping("funder_profile/{funder_id}")
     fun getProfile(
+        @PathVariable("funder_id") funderId: String,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        val funderId = userAccountService.authorizationCheck(authorization)
+        userAccountService.authorizationCheck(authorization)
 
         val getFunderProfileResponse = funderProfileService.get(funderId)
 

@@ -26,7 +26,7 @@ class FunderProfileServiceImpl(
 
     override fun get(funderId: String): FunderProfile {
         val funderProfile = funderProfileRepository.findByIdOrNull(funderId)
-            ?: throw NotFoundException("Profil peneliti tidak ditemukan")
+            ?: throw NotFoundException("Profil organisasi tidak ditemukan")
 
         return funderProfile
     }
