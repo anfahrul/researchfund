@@ -52,9 +52,9 @@ class ResearcherController(
     fun updateProfile(
         @PathVariable("researcher_id") researcherId: Int,
         @RequestBody updateResearcherProfile: UpdateResearcherProfile,
-        @CookieValue("jwt") jwt: String?
+        @RequestHeader("Authorization") authorization: String?
     ): WebResponse<ResearcherProfile> {
-        userAccountService.cookieCheck(jwt)
+        userAccountService.cookieCheck(authorization)
         val updateProfileResponse = researcherProfileService.update(researcherId, updateResearcherProfile)
 
         return WebResponse(
