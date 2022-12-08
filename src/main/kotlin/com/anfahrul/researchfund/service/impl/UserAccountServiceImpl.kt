@@ -16,7 +16,6 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.*
@@ -117,7 +116,7 @@ class UserAccountServiceImpl(
             .claim("username", userAccount?.username)
             .claim("email", userAccount?.email)
             .claim("role", userAccount?.role)
-            .setExpiration(Date(System.currentTimeMillis() + 60 * 24 * 1000))
+            .setExpiration(Date(System.currentTimeMillis() + 3600000))
             .signWith(SignatureAlgorithm.HS512, key)
             .compact()
 
@@ -146,16 +145,6 @@ class UserAccountServiceImpl(
             }
         } catch (e: Exception) {
             throw BadRequestException("Akses tidak diizinkan")
-        }
-    }
-
-    override fun deleteCookie(jwt: String?, response: HttpServletResponse) {
-        if (jwt == null) {
-            throw UnauthorizedException("Akses tidak diizinkan")
-        } else {
-            val cookie = Cookie("jwt", "")
-            cookie.maxAge = 0
-            response.addCookie(cookie)
         }
     }
 }
