@@ -5,10 +5,7 @@ import com.anfahrul.researchfund.model.EducationRequest
 import com.anfahrul.researchfund.model.ResearchExperienceRequest
 import com.anfahrul.researchfund.model.UpdateResearcherProfile
 import com.anfahrul.researchfund.model.WebResponse
-import com.anfahrul.researchfund.service.EducationService
-import com.anfahrul.researchfund.service.ResearchExperienceService
-import com.anfahrul.researchfund.service.ResearcherProfileService
-import com.anfahrul.researchfund.service.UserAccountService
+import com.anfahrul.researchfund.service.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -17,7 +14,8 @@ class ResearcherController(
     val educationService: EducationService,
     val researchExperienceService: ResearchExperienceService,
     val researcherProfileService: ResearcherProfileService,
-    val userAccountService: UserAccountService
+    val userAccountService: UserAccountService,
+    val middleware: Middleware
 ) {
     @PostMapping("education/add")
     fun addEducation(
@@ -25,6 +23,7 @@ class ResearcherController(
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
         val researcherId = userAccountService.authorizationCheck(authorization)
+        middleware.researcherMiddleware(authorization)
 
         val educationsResponse = educationService.add(researcherId, educationRequest)
 
@@ -41,6 +40,7 @@ class ResearcherController(
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
         val researcherId = userAccountService.authorizationCheck(authorization)
+        middleware.researcherMiddleware(authorization)
 
         val researchExperienceResponse = researchExperienceService.add(researcherId, researchExperienceRequest)
 
@@ -59,6 +59,7 @@ class ResearcherController(
     ): WebResponse<ResearcherProfile> {
         userAccountService.authorizationCheck(authorization)
         val updateProfileResponse = researcherProfileService.update(researcherId, updateResearcherProfile)
+        middleware.researcherMiddleware(authorization)
 
         return WebResponse(
             code = 200,

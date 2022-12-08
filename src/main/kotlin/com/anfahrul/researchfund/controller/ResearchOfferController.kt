@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("api")
 class ResearchOfferController(
     val researchOfferService: ResearchOfferService,
-    val userAccountService: UserAccountService
+    val userAccountService: UserAccountService,
+    val middleware: Middleware
 ) {
     @PostMapping("research_offer/create")
     fun create(
@@ -18,6 +19,8 @@ class ResearchOfferController(
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<ResearchOfferResponse> {
         val funderId = userAccountService.authorizationCheck(authorization)
+        middleware.funderMiddleware(authorization)
+
         val createOfferResponse = researchOfferService.create(funderId, researchOfferRequest)
 
         return WebResponse(
@@ -79,6 +82,8 @@ class ResearchOfferController(
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<ResearchOffer> {
         userAccountService.authorizationCheck(authorization)
+        middleware.funderMiddleware(authorization)
+
         val updateOfferResponse = researchOfferService.update(researchOfferId, researchOfferRequest)
 
         return WebResponse(
@@ -94,6 +99,8 @@ class ResearchOfferController(
         @RequestHeader("Authorization") authorization: String?
     ): WebResponseWithMessage {
         userAccountService.authorizationCheck(authorization)
+        middleware.funderMiddleware(authorization)
+
         researchOfferService.delete(researchOfferId)
 
         return WebResponseWithMessage(

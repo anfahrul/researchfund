@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("api")
 class FunderController(
     val funderProfileService: FunderProfileService,
-    val userAccountService: UserAccountService
+    val userAccountService: UserAccountService,
+    val middleware: Middleware
 ) {
     @PutMapping("funder_profile/{funder_id}/update")
     fun updateProfile(
@@ -18,6 +19,8 @@ class FunderController(
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<FunderProfile> {
         userAccountService.authorizationCheck(authorization)
+        middleware.funderMiddleware(authorization)
+
         val updateProfileResponse = funderProfileService.update(funderId, updateFunderProfile)
 
         return WebResponse(
