@@ -3,13 +3,13 @@ package com.anfahrul.researchfund.entity
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "researchOffer")
+@Table(name = "research_offer")
 data class ResearchOffer(
 
     @Id
-    @Column(name = "research_offer")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    val researchOfferId: Int = 0,
+    @Column(name = "research_offer_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    val researchOfferId: String = "",
 
     @Column(name = "research_offer_name")
     var researchOfferName: String = "",

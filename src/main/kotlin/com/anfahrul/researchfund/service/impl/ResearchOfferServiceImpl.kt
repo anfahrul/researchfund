@@ -40,7 +40,7 @@ class ResearchOfferServiceImpl(
         )
     }
 
-    override fun get(researchOfferId: Int): ResearchOffer {
+    override fun get(researchOfferId: String): ResearchOffer {
         val researchOffer = researchOfferRepository.findByIdOrNull(researchOfferId)
             ?: throw NotFoundException("Research offer tidak ditemukan")
 
@@ -58,7 +58,7 @@ class ResearchOfferServiceImpl(
         return researchOfferRepository.findAll()
     }
 
-    override fun update(researchOfferId: Int, researchOfferRequest: ResearchOfferRequest): ResearchOffer {
+    override fun update(researchOfferId: String, researchOfferRequest: ResearchOfferRequest): ResearchOffer {
         validationUtil.validate(researchOfferRequest)
 
         val researchOffer = researchOfferRepository.findByIdOrNull(researchOfferId)
@@ -75,7 +75,7 @@ class ResearchOfferServiceImpl(
         return researchOfferRepository.save(researchOffer)
     }
 
-    override fun delete(researchOfferId: Int) {
+    override fun delete(researchOfferId: String) {
         val researchOffer = researchOfferRepository.findByIdOrNull(researchOfferId)
             ?: throw NotFoundException("Research offer tidak ditemukan")
 

@@ -8,13 +8,13 @@ interface ResearchOfferService {
 
     fun create(funderId: String, researchOfferRequest: ResearchOfferRequest): ResearchOfferResponse
 
-    fun get(researchOfferId: Int): ResearchOffer
+    fun get(researchOfferId: String): ResearchOffer
 
     fun getAllByFunderId(funderId: String): List<ResearchOffer>
 
     fun getAll(): List<ResearchOffer>
 
-    fun update(researchOfferId: Int, researchOfferRequest: ResearchOfferRequest): ResearchOffer
+    fun update(researchOfferId: String, researchOfferRequest: ResearchOfferRequest): ResearchOffer
 
-    fun delete(researchOfferId: Int)
+    fun delete(researchOfferId: String)
 }

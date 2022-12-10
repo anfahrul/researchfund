@@ -32,8 +32,7 @@ class ResearchOfferController(
 
     @GetMapping("research_offer/{research_offer_id}")
     fun get(
-        @PathVariable("research_offer_id") researchOfferId: Int,
-        @RequestBody researchOfferRequest: ResearchOfferRequest,
+        @PathVariable("research_offer_id") researchOfferId: String,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<ResearchOffer> {
         userAccountService.authorizationCheck(authorization)
@@ -77,7 +76,7 @@ class ResearchOfferController(
 
     @PutMapping("research_offer/{research_offer_id}/update")
     fun update(
-        @PathVariable("research_offer_id") researchOfferId: Int,
+        @PathVariable("research_offer_id") researchOfferId: String,
         @RequestBody researchOfferRequest: ResearchOfferRequest,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<ResearchOffer> {
@@ -95,7 +94,7 @@ class ResearchOfferController(
 
     @DeleteMapping("research_offer/{research_offer_id}/delete")
     fun delete(
-        @PathVariable("research_offer_id") researchOfferId: Int,
+        @PathVariable("research_offer_id") researchOfferId: String,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponseWithMessage {
         userAccountService.authorizationCheck(authorization)
