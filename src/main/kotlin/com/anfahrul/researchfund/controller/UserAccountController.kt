@@ -39,14 +39,14 @@ class UserAccountController(
     @PostMapping("logout")
     fun logout(
         @RequestHeader("Authorization") authorization: String?
-    ): WebResponse<Any?> {
+    ): WebResponseWithMessage {
 
         userAccountService.authorizationCheck(authorization)
 
-        return WebResponse(
+        return WebResponseWithMessage(
             code = 200,
-            status = "Logout success",
-            data = null
+            status = "Ok",
+            message = "Logout success"
         )
     }
 }
