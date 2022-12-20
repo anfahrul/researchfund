@@ -105,4 +105,22 @@ class ProposalController(
             data = proposal
         )
     }
+
+    @PostMapping("proposal/{proposal_id}/review")
+    fun review(
+        @PathVariable("proposal_id") proposalId: String,
+        @RequestHeader("Authorization") authorization: String?,
+        @RequestBody reviewRequest: ReviewRequest
+    ): WebResponseWithMessage {
+        userAccountService.authorizationCheck(authorization)
+        middleware.funderMiddleware(authorization)
+
+        val reviewResponse = proposalService.review(proposalId, reviewRequest)
+
+        return WebResponseWithMessage(
+            code = 200,
+            status = "Ok",
+            message = "Review pada proposal ${reviewResponse} telah disimpan"
+        )
+    }
 }

@@ -12,4 +12,6 @@ interface ProposalService {
     fun findByResearchOfferId(researchOfferId: String): List<GetProposalResponse>
 
     fun edit(proposalId: String, proposalRequest: ProposalRequest): Proposal
+
+    fun review(proposalId: String, reviewRequest: ReviewRequest): String
 }
