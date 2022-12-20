@@ -1,6 +1,7 @@
 package com.anfahrul.researchfund.controller
 
 import com.anfahrul.researchfund.entity.FunderProfile
+import com.anfahrul.researchfund.entity.Proposal
 import com.anfahrul.researchfund.entity.ResearchOffer
 import com.anfahrul.researchfund.model.*
 import com.anfahrul.researchfund.service.*
@@ -52,6 +53,56 @@ class ProposalController(
             code = 200,
             status = "Ok",
             message = "Upload file success"
+        )
+    }
+
+    @GetMapping("proposal/{proposal_id}")
+    fun getProposal(
+        @PathVariable("proposal_id") proposalId: String,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<GetProposalResponse> {
+        userAccountService.authorizationCheck(authorization)
+
+        val proposal = proposalService.get(proposalId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = proposal
+        )
+    }
+
+    @PutMapping("proposal/{proposal_id}/update")
+    fun updateProposal(
+        @PathVariable("proposal_id") proposalId: String,
+        @RequestBody proposalRequest: ProposalRequest,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<Proposal> {
+        userAccountService.authorizationCheck(authorization)
+        middleware.researcherMiddleware(authorization)
+
+        val proposal = proposalService.edit(proposalId, proposalRequest)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = proposal
+        )
+    }
+
+    @GetMapping("{research_offer_id}/proposals")
+    fun findProposalByResearchOfferId(
+        @PathVariable("research_offer_id") researchOfferId: String,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<List<GetProposalResponse>> {
+        userAccountService.authorizationCheck(authorization)
+
+        val proposal = proposalService.findByResearchOfferId(researchOfferId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = proposal
         )
     }
 }
