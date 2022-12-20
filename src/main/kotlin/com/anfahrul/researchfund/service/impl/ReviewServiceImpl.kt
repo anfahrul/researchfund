@@ -20,7 +20,15 @@ class ReviewServiceImpl(
     val validationUtil: ValidationUtil
 ): ReviewService {
     override fun get(reviewId: String): ReviewResponse {
-        TODO("Not yet implemented")
+        val review = reviewRepository.findByIdOrNull(reviewId) ?: throw NotFoundException("Review tidak ditemukan")
+
+        return ReviewResponse(
+            reviewId = review.reviewId,
+            proposalId = review.proposalId,
+            dateReviewed = review.dateReviewed,
+            fundingStatus = review.fundingStatus,
+            message = review.message
+        )
     }
 
     override fun findByProposalId(proposalId: String): List<ReviewResponse> {

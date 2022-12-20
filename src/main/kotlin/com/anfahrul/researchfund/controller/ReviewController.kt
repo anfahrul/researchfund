@@ -33,4 +33,20 @@ class ReviewController(
             data = reviewResponses
         )
     }
+
+    @GetMapping("reviews/{review_id}")
+    fun getReview(
+        @PathVariable("review_id") reviewId: String,
+        @RequestHeader("Authorization") authorization: String?,
+    ): WebResponse<ReviewResponse> {
+        userAccountService.authorizationCheck(authorization)
+
+        val reviewResponses = reviewService.get(reviewId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = reviewResponses
+        )
+    }
 }
