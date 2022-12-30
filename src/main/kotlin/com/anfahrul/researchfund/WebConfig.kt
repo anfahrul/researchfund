@@ -1,12 +1,27 @@
 package com.anfahrul.researchfund
 
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
-class WebConfig: WebMvcConfigurer {
-    override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**")
-            .allowedOrigins("http://localhost:3000", "http://localhost:8080", "http://localhost:4200")
-            .allowCredentials(true)
+@Configuration
+class WebServerConfiguration {
+
+    @Value("\${cors.originPatterns:default}")
+    private val corsOriginPatterns: String = ""
+
+    @Bean
+    fun addCorsConfig(): WebMvcConfigurer {
+        return object : WebMvcConfigurer {
+            override fun addCorsMappings(registry: CorsRegistry) {
+                val allowedOrigins = corsOriginPatterns.split(",").toTypedArray()
+                registry.addMapping("/**")
+                    .allowedMethods("*")
+                    .allowedOriginPatterns(*allowedOrigins)
+                    .allowCredentials(true)
+            }
+        }
     }
 }

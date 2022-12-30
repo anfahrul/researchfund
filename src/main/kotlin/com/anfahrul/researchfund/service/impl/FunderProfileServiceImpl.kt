@@ -44,7 +44,6 @@ class FunderProfileServiceImpl(
             address = updateFunderProfile.address
             organitation_description = updateFunderProfile.organitation_description
             phone = updateFunderProfile.phone
-            email = updateFunderProfile.email
             logo = updateFunderProfile.logo
         }
 

@@ -22,9 +22,6 @@ data class FunderProfile(
     @Column(name = "phone")
     var phone: String = "",
 
-    @Column(name = "email")
-    var email: String = "",
-
     @Column(name = "logo")
     var logo: String = "",
 

@@ -16,9 +16,5 @@ data class UpdateFunderProfile(
     @field:NotBlank
     var phone: String = "",
 
-    @field:NotBlank
-    var email: String = "",
-
-    @field:NotBlank
     var logo: String = "",
 )

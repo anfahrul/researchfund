@@ -18,12 +18,11 @@ class ResearcherController(
     val userAccountService: UserAccountService,
     val middleware: Middleware
 ) {
-    @GetMapping("researcher_profile/{researcher_id}")
+    @GetMapping("researcher_profile")
     fun getProfile(
-        @PathVariable("researcher_id") researcherId: String,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<Any> {
-        userAccountService.authorizationCheck(authorization)
+        val researcherId = userAccountService.authorizationCheck(authorization)
 
         val getResearcherProfileResponse = researcherProfileService.get(researcherId)
 
