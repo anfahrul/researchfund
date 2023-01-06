@@ -11,6 +11,10 @@ interface ProposalService {
 
     fun findByResearchOfferId(researchOfferId: String): List<GetProposalResponse>
 
+    fun findByResearcherId(researcherId: String): List<GetProposalResponse>
+
+    fun findByResearcherOfferIdAndResearcherId(researchOfferId: String, researcherId: String): Boolean
+
     fun edit(proposalId: String, proposalRequest: ProposalRequest): Proposal
 
     fun review(proposalId: String, reviewRequest: ReviewRequest): String

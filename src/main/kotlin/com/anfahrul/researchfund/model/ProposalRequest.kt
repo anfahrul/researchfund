@@ -12,4 +12,6 @@ data class ProposalRequest(
 
     @field:NotBlank
     val keyword: String,
+
+    val filePath: String
 )

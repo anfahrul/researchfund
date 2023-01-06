@@ -27,5 +27,8 @@ data class ResearchOffer(
     var fund: Int = 0,
 
     @Column(name = "funder_id")
-    val funderId: String = ""
+    val funderId: String = "",
+
+    @Column(name = "guidebook_path")
+    val guideBookPath: String = ""
 )

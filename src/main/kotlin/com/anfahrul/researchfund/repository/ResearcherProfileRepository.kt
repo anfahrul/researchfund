@@ -5,5 +5,5 @@ import com.anfahrul.researchfund.entity.UserAccount
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ResearcherProfileRepository: JpaRepository<ResearcherProfile, String> {
-    fun findByUsername(username:String): ResearcherProfile?
+    fun findByUsername(username:String?): ResearcherProfile?
 }

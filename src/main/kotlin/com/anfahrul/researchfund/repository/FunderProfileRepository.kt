@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface FunderProfileRepository: JpaRepository<FunderProfile, String> {
 
-    fun findByUsername(username:String): FunderProfile?
+    fun findByUsername(username:String?): FunderProfile?
 }

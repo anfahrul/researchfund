@@ -8,6 +8,7 @@ import com.anfahrul.researchfund.model.ProposalRequest
 import com.anfahrul.researchfund.model.ProposalResponse
 import com.anfahrul.researchfund.model.ReviewRequest
 import com.anfahrul.researchfund.repository.ResearchOfferRepository
+import com.anfahrul.researchfund.repository.ResearcherProfileRepository
 import com.anfahrul.researchfund.repository.ReviewRepository
 import com.anfahrul.researchfund.repository.proposalRepository
 import com.anfahrul.researchfund.service.ProposalService
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service
 class ProposalServiceImpl(
     val proposalRepository: proposalRepository,
     val researchOfferRepository: ResearchOfferRepository,
+    val researcherProfileRepository: ResearcherProfileRepository,
     val reviewRepository: ReviewRepository,
     val validationUtil: ValidationUtil
 ): ProposalService {
@@ -33,6 +35,7 @@ class ProposalServiceImpl(
             researchTitle = proposalRequest.researchTitle,
             abstrac = proposalRequest.abstrac,
             keyword = proposalRequest.keyword,
+            filePath = proposalRequest.filePath,
             researchOfferId = researchOfferId,
             researcherId = researcherId
         )
@@ -43,6 +46,7 @@ class ProposalServiceImpl(
             researchTitle = proposal.researchTitle,
             abstrac = proposal.abstrac,
             keyword = proposal.keyword,
+            filePath = proposal.filePath,
             researchOfferId = proposal.researchOfferId,
             researcherId = proposal.researcherId,
         )
@@ -67,6 +71,18 @@ class ProposalServiceImpl(
             ?: throw NotFoundException("Research offer tidak ditemukan")
 
         return proposalRepository.findByResearchOfferId(researchOffer.researchOfferId)
+    }
+
+    override fun findByResearcherId(researcherId: String): List<GetProposalResponse> {
+        val researcher = researcherProfileRepository.findByIdOrNull(researcherId)
+            ?: throw NotFoundException("Researcher profile tidak ditemukan")
+
+        return proposalRepository.findByResearcherId(researcher.researcherId)
+    }
+
+    override fun findByResearcherOfferIdAndResearcherId(researchOfferId: String, researcherId: String): Boolean {
+        val proposal: List<Any> = proposalRepository.findByResearchOfferIdAndResearcherId(researchOfferId, researcherId)
+        return proposal.size == 1
     }
 
     override fun edit(proposalId: String, proposalRequest: ProposalRequest): Proposal {

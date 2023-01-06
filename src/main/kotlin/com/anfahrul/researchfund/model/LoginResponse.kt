@@ -9,5 +9,7 @@ data class LoginResponse(
 
     val role: Role?,
 
+    val profileId: String?,
+
     val token: String?
 )

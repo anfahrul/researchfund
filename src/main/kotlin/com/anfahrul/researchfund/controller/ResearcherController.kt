@@ -33,6 +33,20 @@ class ResearcherController(
         )
     }
 
+    @GetMapping("researcher_profile/{researcher_id}")
+    fun getPublicProfile(
+        @PathVariable("researcher_id") researcherId: String,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<Any> {
+        val getResearcherProfileResponse = researcherProfileService.get(researcherId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = getResearcherProfileResponse
+        )
+    }
+
     @PostMapping("education/add")
     fun addEducation(
         @RequestBody educationRequest: EducationRequest,

@@ -80,10 +80,20 @@ class UserAccountServiceImpl(
 
         val jwtToken = jwtConfiguration(userAccount)
 
+        var profileId: String? = null
+        if (userAccount?.role === Role.RESEARCHER) {
+            val profile = researcherProfileRepository.findByUsername(userAccount.username)
+            profileId = profile?.researcherId
+        } else {
+            val profile = funderProfileRepository.findByUsername(userAccount?.username)
+            profileId = profile?.funderId
+        }
+
         return LoginResponse(
             userAccount?.username,
             userAccount?.email,
             userAccount?.role,
+            profileId,
             jwtToken
         )
     }

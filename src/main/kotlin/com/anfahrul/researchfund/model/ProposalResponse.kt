@@ -10,6 +10,8 @@ data class ProposalResponse(
 
     val keyword: String,
 
+    val filePath: String,
+
     val researchOfferId: String,
 
     val researcherId: String

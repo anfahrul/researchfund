@@ -24,35 +24,25 @@ class ProposalController(
     @PostMapping("proposal/{research_offer_id}/create")
     fun create(
         @PathVariable("research_offer_id") researchOfferId: String,
-        @RequestBody proposalRequest: ProposalRequest,
+        @RequestParam("researchTitle") researchTitle: String,
+        @RequestParam("abstrac") abstrac: String,
+        @RequestParam("keyword") keyword: String,
+        @RequestParam("filePath") filePath: MultipartFile,
         @RequestHeader("Authorization") authorization: String?
     ): WebResponse<ProposalResponse> {
         val researcherId = userAccountService.authorizationCheck(authorization)
         middleware.researcherMiddleware(authorization)
 
+        val fileName = proposalStorage.store(filePath)
+        val proposalRequest = ProposalRequest(
+            researchTitle, abstrac, keyword, fileName
+        )
         val createProposalResponse = proposalService.create(researcherId, researchOfferId, proposalRequest)
 
         return WebResponse(
             code = 200,
             status = "Ok",
             data = createProposalResponse
-        )
-    }
-
-    @PostMapping("proposal/{proposal_id}/upload")
-    fun uploadProposalFile(
-        @PathVariable("proposal_id") proposalId: String,
-        @RequestParam("proposal_file") proposalFile: MultipartFile,
-        @RequestHeader("Authorization") authorization: String?
-    ): WebResponseWithMessage {
-        userAccountService.authorizationCheck(authorization)
-        middleware.researcherMiddleware(authorization)
-
-        proposalStorage.store(proposalId, proposalFile)
-        return WebResponseWithMessage(
-            code = 200,
-            status = "Ok",
-            message = "Upload file success"
         )
     }
 
@@ -98,6 +88,22 @@ class ProposalController(
         userAccountService.authorizationCheck(authorization)
 
         val proposal = proposalService.findByResearchOfferId(researchOfferId)
+
+        return WebResponse(
+            code = 200,
+            status = "Ok",
+            data = proposal
+        )
+    }
+
+    @GetMapping("/researcher/{researcher_id}/proposals")
+    fun findProposalByResearcherId(
+        @PathVariable("researcher_id") researcherId: String,
+        @RequestHeader("Authorization") authorization: String?
+    ): WebResponse<List<GetProposalResponse>> {
+        userAccountService.authorizationCheck(authorization)
+
+        val proposal = proposalService.findByResearcherId(researcherId)
 
         return WebResponse(
             code = 200,

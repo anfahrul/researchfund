@@ -17,5 +17,7 @@ data class ResearchOfferRequest(
     val proposalFunded: Int,
 
     @field:NotNull
-    val fund: Int
+    val fund: Int,
+
+    val guideBookPath: String
 )

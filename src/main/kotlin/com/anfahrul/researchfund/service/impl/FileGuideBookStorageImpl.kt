@@ -1,14 +1,11 @@
 package com.anfahrul.researchfund.service.impl
 
-import com.anfahrul.researchfund.entity.Proposal
 import com.anfahrul.researchfund.exception.BadRequestException
-import com.anfahrul.researchfund.exception.NotFoundException
 import com.anfahrul.researchfund.repository.proposalRepository
-import com.anfahrul.researchfund.service.FileStorage
+import com.anfahrul.researchfund.service.FileGuideBookStorage
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.Resource
 import org.springframework.core.io.UrlResource
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.util.FileSystemUtils
 import org.springframework.web.multipart.MultipartFile
@@ -18,19 +15,23 @@ import java.nio.file.Paths
 import java.util.stream.Stream
 
 @Service
-class FileStorageImpl(
+class FileGuideBookStorageImpl(
     val proposalRepository: proposalRepository
-): FileStorage {
+): FileGuideBookStorage {
 
     val log = LoggerFactory.getLogger(this::class.java)
-    val rootLocation = Paths.get("filestorage/proposal")
+    val rootLocation = Paths.get("filestorage/guidebook")
 
     override fun store(file: MultipartFile): String {
+//        val proposal = proposalRepository.findByIdOrNull(researchOfferId)
+//        if (proposal == null) {
+//            throw NotFoundException("Research offer tidak ditemukan")
+//        }
         val fileName = (file.originalFilename)?.replace(" ", "_")
-        val proposalFileName = "${System.currentTimeMillis()}_${fileName}"
-        Files.copy(file.inputStream, this.rootLocation.resolve(proposalFileName))
+        val guidebookFileName = "${System.currentTimeMillis()}_${fileName}"
+        Files.copy(file.inputStream, this.rootLocation.resolve(guidebookFileName))
 
-        return proposalFileName
+        return guidebookFileName
     }
 
     override fun loadFile(filename: String): Resource {

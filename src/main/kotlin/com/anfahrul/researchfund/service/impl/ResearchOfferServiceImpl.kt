@@ -20,31 +20,38 @@ class ResearchOfferServiceImpl(
     override fun create(funderId: String, researchOfferRequest: ResearchOfferRequest): ResearchOfferResponse {
         validationUtil.validate(researchOfferRequest)
 
+        val funderProfile = funderProfileRepository.findByIdOrNull(funderId)
+
         val researchOffer = ResearchOffer(
             researchOfferName = researchOfferRequest.researchOfferName,
             details = researchOfferRequest.details,
             category = researchOfferRequest.category,
             proposalFunded = researchOfferRequest.proposalFunded,
             fund = researchOfferRequest.fund,
-            funderId = funderId
+            funderId = funderId,
+            guideBookPath = researchOfferRequest.guideBookPath
         )
 
         researchOfferRepository.save(researchOffer)
 
+
         return ResearchOfferResponse(
-            researchOfferName = researchOffer.researchOfferName,
-            details = researchOffer.details,
-            category = researchOffer.category,
-            proposalFunded = researchOffer.proposalFunded,
-            fund = researchOffer.fund,
+            funderProfile,
+            researchOffer
         )
     }
 
-    override fun get(researchOfferId: String): ResearchOffer {
+    override fun get(researchOfferId: String): ResearchOfferResponse {
         val researchOffer = researchOfferRepository.findByIdOrNull(researchOfferId)
             ?: throw NotFoundException("Research offer tidak ditemukan")
 
-        return researchOffer
+        val funderProfile = funderProfileRepository.findByIdOrNull(researchOffer.funderId)
+            ?: throw NotFoundException("Profil Funder tidak ditemukan")
+
+        return ResearchOfferResponse(
+            funderProfile,
+            researchOffer
+        )
     }
 
     override fun getAllByFunderId(funderId: String): List<ResearchOffer> {

@@ -8,7 +8,7 @@ interface ResearchOfferService {
 
     fun create(funderId: String, researchOfferRequest: ResearchOfferRequest): ResearchOfferResponse
 
-    fun get(researchOfferId: String): ResearchOffer
+    fun get(researchOfferId: String): ResearchOfferResponse
 
     fun getAllByFunderId(funderId: String): List<ResearchOffer>
 
